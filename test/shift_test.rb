@@ -16,35 +16,36 @@ class ShiftTest < Minitest::Test
     assert_equal "011119", @shift.create_a_date
   end
 
+  def test_it_can_multiply_date
+    @shift.expects(:create_a_date).at_least_once.returns("011119")
+    assert_equal 123632161, @shift.multiply_date
+  end
+
+  def test_it_can_chop_date
+    @shift.expects(:create_a_date).at_least_once.returns("011119")
+    assert_equal [2, 1, 6, 1], @shift.make_offset
+  end
+
   def test_it_can_create_a_five_digit_number
     assert_equal 5, @shift.rand_num_generator.length
     assert_equal String, @shift.rand_num_generator.class
   end
 
   def test_it_can_split_up_random_number_into_an_array
-    expected = ["01", "14", "45", "54"]
-    @shift.expects(:array_generator).returns(expected)
-    assert_equal expected, @shift.array_generator
-  end
-
-  def test_it_can_assign_keys
-    expected = {"A"=>1, "B"=>14, "C"=>45, "D"=>56}
-    @shift.expects(:shift_generator).returns(expected)
-    assert_equal expected, @shift.shift_generator
-  end
-
-  def test_it_can_multiply_date
-    @shift.expects(:multiply_date).returns(123632161)
-    assert_equal 123632161, @shift.multiply_date
-  end
-
-  def test_it_can_chop_date
-    @shift.expects(:chop_date).returns([2, 1, 6, 1])
-    assert_equal [2, 1, 6, 1], @shift.chop_date
+    @shift.expects(:rand_num_generator).returns('01231')
+    assert_equal [1, 12, 23, 31], @shift.key_array_generator
   end
 
   def test_it_can_combine_arrays
-    @shift.expects(:combine_arrays).returns([34, 45, 56, 75])
-    assert_equal [34, 45, 56, 75], @shift.combine_arrays
+    @shift.expects(:rand_num_generator).at_least_once.returns('01231')
+    @shift.expects(:create_a_date).at_least_once.returns("011119")
+    assert_equal [3, 13, 29, 32], @shift.combine_arrays
+  end
+
+  def test_it_can_assign_keys
+    expected = {"A"=>2, "B"=>18, "C"=>24, "D"=>33}
+    @shift.expects(:rand_num_generator).at_least_once.returns('01231')
+    @shift.expects(:create_a_date).at_least_once.returns("011119")
+    assert_equal expected, @shift.shift_generator
   end
 end
