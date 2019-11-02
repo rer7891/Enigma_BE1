@@ -4,17 +4,27 @@ class Shift
     '%05d' % rand(5 ** 5)
   end
 
-  def key_generator(num = rand_num_generator)
-    hash = {}
-    hash["A"] = num[0]
-    hash["A"] += num[1]
-    hash["B"] = num[1]
-    hash["B"] += num[2]
-    hash["C"] = num[2]
-    hash["C"] += num[3]
-    hash["D"] = num[3]
-    hash["D"] += num[4]
-    hash
-    #require "pry"; binding.pry
+  def array_generator
+    num_array = rand_num_generator.chars
+    num_join = num_array.each_cons(2).map {|x| x}
+    num_join.map { |num| num.join}
+  end
+
+  def key_generator
+    letter_array = ["A", "B", "C", "D"]
+    letter_array.reduce({}) do |key_holder, letter|
+      key_holder[letter] = "0"
+      key_holder
+    end
+  end
+
+  def value_assigner
+    num = -1
+    final_key_hash = {}
+    key_generator.each do |key, value|
+      value = array_generator[num += 1]
+      final_key_hash[key] = value
+    end
+    final_key_hash
   end
 end
