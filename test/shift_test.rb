@@ -1,5 +1,5 @@
 require './test/test_helper'
-require './lib/shift.rb'
+require './lib/shift'
 
 class ShiftTest < Minitest::Test
 
@@ -21,7 +21,7 @@ class ShiftTest < Minitest::Test
     assert_equal 123632161, @shift.multiply_date
   end
 
-  def test_it_can_chop_date
+  def test_it_can_make_an_offset
     @shift.expects(:create_a_date).at_least_once.returns("011119")
     assert_equal [2, 1, 6, 1], @shift.make_offset
   end
@@ -43,7 +43,7 @@ class ShiftTest < Minitest::Test
   end
 
   def test_it_can_assign_keys
-    expected = {"A"=>2, "B"=>18, "C"=>24, "D"=>33}
+    expected = {"A"=>3, "B"=>13, "C"=>29, "D"=>32}
     @shift.expects(:rand_num_generator).at_least_once.returns('01231')
     @shift.expects(:create_a_date).at_least_once.returns("011119")
     assert_equal expected, @shift.shift_generator
