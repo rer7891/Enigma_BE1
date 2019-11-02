@@ -19,8 +19,8 @@ class Shift
   end
 
   def make_offset
-    date_range = multiply_date.to_s
-    date_range[-4..-1].to_i.digits
+    date_range = multiply_date.to_s.chars
+    date_range[-4..-1].map {|num| num.to_i}
   end
 
   def combine_arrays
