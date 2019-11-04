@@ -3,15 +3,12 @@ require './lib/offset'
 require './lib/encrypt'
 
 class Enigma
-  def initialize
-    @keys = Keys.new
-    @date = Time.now.strftime("%d%m%y")
-    @offset = Offset.new(@date)
+  def initialize(encrypt)
+    @encrypt = encrypt
   end
 
-  def encrypt(message, key = @keys.key_array_generator, date = @date)
-
-    encrypts = Encrypt.new(message, key, date)
+  def encrypt(message, key = nil, date = nil)
+  @keys.key_array_generator if key == nil || @date if date == nil
 
     {encryption: encrypts.encrypt_message,
     key: encrypts.shift_generator,
