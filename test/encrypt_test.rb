@@ -6,7 +6,8 @@ class EncryptTest < MiniTest::Test
   def setup
     @key = [1, 12, 23, 31]
     @offset = [2 , 1, 6, 1]
-    @encrypt = Encrypt.new(@key, @offset)
+    @message = "Im over it!"
+    @encrypt = Encrypt.new(@message, @key, @offset)
   end
 
   def test_it_exists
@@ -14,6 +15,8 @@ class EncryptTest < MiniTest::Test
   end
 
   def test_it_initializes
+    expected = ["i", "m", " ", "o", "v", "e", "r", " ", "i", "t", "!"]
+    assert_equal expected, @encrypt.message
     assert_equal [1, 12, 23, 31], @encrypt.key
     assert_equal [2, 1, 6, 1], @encrypt.offset
   end
@@ -34,7 +37,7 @@ class EncryptTest < MiniTest::Test
   end
 
   def test_it_can_encrypt_a_message
-    assert_equal "lz uyru lg!", @encrypt.encrypt_message("Im over it!")
+    assert_equal "lz uyru lg!", @encrypt.encrypt_message
   end
 
   def test_encryption_keys
@@ -42,7 +45,7 @@ class EncryptTest < MiniTest::Test
     "l"=>"r", "m"=>"s", "n"=>"t", "o"=>"u", "p"=>"v", "q"=>"w", "r"=>"x", "s"=>"y", "t"=>"z", "u"=>"a",
     "v"=>"b", "w"=>"c", "x"=>"d", "y"=>"e", "z"=>"f"}
     @encrypt.shift_hash
-    assert_equal [1, 2, 3, 4], @encrypt.encrypter.keys
-    assert_equal expected, @encrypt.encrypter[4]
+    assert_equal [0, 1, 2, 3], @encrypt.encrypter.keys
+    assert_equal expected, @encrypt.encrypter[3]
   end
 end
