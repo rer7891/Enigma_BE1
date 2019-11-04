@@ -34,7 +34,7 @@ class EncryptTest < MiniTest::Test
   end
 
   def test_it_can_encrypt_a_message
-    assert_equal "vp rihx lg!", @encrypt.encrypt_message("Im over it!")
+    assert_equal "lz uyru lg!", @encrypt.encrypt_message("Im over it!")
   end
 
   def test_encryption_keys

@@ -30,11 +30,12 @@ class Encrypt
 
   def encrypt_message(message)
     shift_hash
-    num = 1
+    num = 0
+
     message.downcase.chars.map do |letter|
       num += 1
       if create_letters.include?(letter) && num <= 4
-        x = @encrypter[num][letter]
+        @encrypter[num][letter]
       elsif create_letters.include?(letter) && num > 4
         num = 1
         @encrypter[num][letter]
