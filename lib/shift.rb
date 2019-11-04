@@ -22,14 +22,4 @@ class Shift
     date_range = multiply_date.to_s.chars
     date_range[-4..-1].map {|num| num.to_i}
   end
-
-  def combine_arrays
-    combined_array = key_array_generator.zip(make_offset)
-    combined_array.map {|num| num.sum }.flatten
-  end
-
-  def shift_generator
-    letter_array = ["A", "B", "C", "D"]
-    letter_array.zip(combine_arrays).to_h
-  end
 end
