@@ -18,13 +18,5 @@ class OffsetTest < Minitest::Test
     assert_equal "011119", @offset.create_a_date
   end
 
-  def test_it_can_multiply_date
-    @offset.expects(:create_a_date).at_least_once.returns("011119")
-    assert_equal 123632161, @offset.multiply_date
-  end
 
-  def test_it_can_make_an_offset
-    @offset.expects(:create_a_date).at_least_once.returns("011119")
-    assert_equal [2, 1, 6, 1], @offset.make_offset
-  end
 end

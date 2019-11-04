@@ -9,9 +9,9 @@ class Encrypt
     ("a".."z").to_a #<< " "
   end
 
-
-
-  def encrypt_message(message)
+  def encrypt_message(message, key, date)
+  @shift_generator.
+require "pry"; binding.pry
     shift_hash
     num = -1
 

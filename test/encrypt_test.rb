@@ -1,13 +1,14 @@
 require './test/test_helper'
 require './lib/encrypt'
+require './lib/shift_generator'
 
 class EncryptTest < MiniTest::Test
 
   def setup
-    @key = [1, 12, 23, 31]
-    @offset = [2 , 1, 6, 1]
+    date = Time.now.strftime("%d%m%y")
     @message = "Im over it!"
-    @encrypt = Encrypt.new(@message, @key, @offset)
+    @shift_generator = ShiftGenerator.new(date)
+    @encrypt = Encrypt.new(@shift_generator)
   end
 
   def test_it_exists
@@ -15,10 +16,11 @@ class EncryptTest < MiniTest::Test
   end
 
   def test_it_initializes
-    expected = ["i", "m", " ", "o", "v", "e", "r", " ", "i", "t", "!"]
-    assert_equal expected, @encrypt.message
-    assert_equal [1, 12, 23, 31], @encrypt.key
-    assert_equal [2, 1, 6, 1], @encrypt.offset
+  #   expected = ["i", "m", " ", "o", "v", "e", "r", " ", "i", "t", "!"]
+  #   assert_equal expected, @encrypt.message
+  #   assert_equal [1, 12, 23, 31], @encrypt.key
+  #   assert_equal [2, 1, 6, 1], @encrypt.offset
+    assert_instance_of ShiftGenerator, @encrypt.shift_generator
   end
 
   def test_it_creates_an_alphabet
@@ -27,17 +29,9 @@ class EncryptTest < MiniTest::Test
     assert_equal expected, @encrypt.create_letters
   end
 
-  def test_it_can_combine_arrays
-    assert_equal [3, 13, 29, 32], @encrypt.combine_arrays
-  end
-
-  def test_it_can_assign_keys
-    expected = {"A"=>3, "B"=>13, "C"=>29, "D"=>32}
-    assert_equal expected, @encrypt.shift_generator
-  end
 
   def test_it_can_encrypt_a_message
-    assert_equal "lz uyru lg!", @encrypt.encrypt_message
+    assert_equal "lz uyru lg!", @encrypt.encrypt_message(@message)
   end
 
   def test_encryption_keys

@@ -1,5 +1,6 @@
 class ShiftGenerator
-  def initialize (date)
+  def initialize (key, date)
+    @key = key
     @date = date.to_i
   end
 
@@ -27,7 +28,7 @@ class ShiftGenerator
     combined_array.map {|num| num.sum }.flatten
   end
 
-  def shift_generator
+  def shift_maker
     key_array = ["A", "B", "C", "D"]
     key_array.zip(combine_arrays).to_h
   end

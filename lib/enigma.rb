@@ -1,5 +1,4 @@
-require './lib/keys'
-require './lib/offset'
+require './lib/shift_generator'
 require './lib/encrypt'
 
 class Enigma
@@ -8,10 +7,11 @@ class Enigma
   end
 
   def encrypt(message, key = nil, date = nil)
-  @keys.key_array_generator if key == nil || @date if date == nil
+  @encrypt.shift_generator.key_array_generator if key == nil
+  @encrypt.shift_generator.date if date == nil
 
-    {encryption: encrypts.encrypt_message,
-    key: encrypts.shift_generator,
+    {encryption: encrypts.encrypt_message(message, key, date),
+    key: encrypts.shift_generator.shift_maker,
     date: date}
   end
 
