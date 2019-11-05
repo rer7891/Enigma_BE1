@@ -44,7 +44,7 @@ class EncryptTest < MiniTest::Test
     expected = {"a"=>"g", "b"=>"h", "c"=>"i", "d"=>"j", "e"=>"k", "f"=>"l", "g"=>"m", "h"=>"n", "i"=>"o", "j"=>"p", "k"=>"q",
     "l"=>"r", "m"=>"s", "n"=>"t", "o"=>"u", "p"=>"v", "q"=>"w", "r"=>"x", "s"=>"y", "t"=>"z", "u"=>"a",
     "v"=>"b", "w"=>"c", "x"=>"d", "y"=>"e", "z"=>"f"}
-    @decrypt.shift_hash
+    assert_equal Hash, @decrypt.shift_hash.class
     assert_equal [0, 1, 2, 3], @decrypt.encrypter.keys
     assert_equal expected, @decrypt.encrypter[3]
   end
