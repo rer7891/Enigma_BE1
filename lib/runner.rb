@@ -7,5 +7,4 @@ key = Keys.new
 offset = Offset.new
 encrypts = Encrypt.new(key, offset)
 enigma = Enigma.new(encrypts)
-
-puts enigma.encrypt("Im over it!", [01, 23, 54, 76])
+puts enigma.encrypt("Im over it!", "93234")
