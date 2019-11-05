@@ -1,13 +1,15 @@
 require './test/test_helper'
 require './lib/encrypt'
+require './lib/keys'
+require './lib/offset'
 
 class EncryptTest < MiniTest::Test
 
   def setup
-    @key = [1, 12, 23, 31]
-    @offset = [2 , 1, 6, 1]
+    @key = Keys.new
+    @offset = Offset.new
     @message = "Im over it!"
-    @encrypt = Encrypt.new(@message, @key, @offset)
+    @encrypt = Encrypt.new(@key, @offset)
   end
 
   def test_it_exists
@@ -15,10 +17,8 @@ class EncryptTest < MiniTest::Test
   end
 
   def test_it_initializes
-    expected = ["i", "m", " ", "o", "v", "e", "r", " ", "i", "t", "!"]
-    assert_equal expected, @encrypt.message
-    assert_equal [1, 12, 23, 31], @encrypt.key
-    assert_equal [2, 1, 6, 1], @encrypt.offset
+    assert_equal Keys, @encrypt.key.class
+    assert_equal Offset, @encrypt.offset.class
   end
 
   def test_it_creates_an_alphabet
@@ -28,19 +28,27 @@ class EncryptTest < MiniTest::Test
   end
 
   def test_it_can_combine_arrays
+    @offset.expects(:create_a_date).at_least_once.returns("011119")
+    @key.expects(:rand_num_generator).at_least_once.returns('01231')
     assert_equal [3, 13, 29, 32], @encrypt.combine_arrays
   end
 
   def test_it_can_assign_keys
+    @offset.expects(:create_a_date).at_least_once.returns("011119")
+    @key.expects(:rand_num_generator).at_least_once.returns('01231')
     expected = {"A"=>3, "B"=>13, "C"=>29, "D"=>32}
     assert_equal expected, @encrypt.shift_generator
   end
 
   def test_it_can_encrypt_a_message
-    assert_equal "lz uyru lg!", @encrypt.encrypt_message
+    @offset.expects(:create_a_date).at_least_once.returns("011119")
+    @key.expects(:rand_num_generator).at_least_once.returns('01231')
+    assert_equal "lz uyru lg!", @encrypt.encrypt_message(@message)
   end
 
   def test_encryption_keys
+    @offset.expects(:create_a_date).at_least_once.returns("011119")
+    @key.expects(:rand_num_generator).at_least_once.returns('01231')
     expected = {"a"=>"g", "b"=>"h", "c"=>"i", "d"=>"j", "e"=>"k", "f"=>"l", "g"=>"m", "h"=>"n", "i"=>"o", "j"=>"p", "k"=>"q",
     "l"=>"r", "m"=>"s", "n"=>"t", "o"=>"u", "p"=>"v", "q"=>"w", "r"=>"x", "s"=>"y", "t"=>"z", "u"=>"a",
     "v"=>"b", "w"=>"c", "x"=>"d", "y"=>"e", "z"=>"f"}
