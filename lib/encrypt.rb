@@ -1,19 +1,17 @@
 class Encrypt
-  attr_reader :key, :offset, :encrypter, :message
+  attr_reader :keys, :offset, :encrypter
 
-  def initialize(message, key, date)
-    @message = message.downcase.chars
-    @key = key
-    @date = date.to_i
-    @offset = Offset.new(date)
+  def initialize(keys, offset)
+    @keys = keys
+    @offset = offset
   end
 
   def create_letters
-    ("a".."z").to_a #<< " "
+    ("a".."z").to_a
   end
 
   def combine_arrays
-    combined_array = @key.zip(@offset.make_offset)
+    combined_array = @keys.key_array_generator.zip(@offset.make_offset)
     combined_array.map {|num| num.sum }.flatten
   end
 
@@ -22,7 +20,7 @@ class Encrypt
     key_array.zip(combine_arrays).to_h
   end
 
-  def shift_hash
+  def shift_hash#(key = @key, offset = @offset)
       key_array = [0, 1, 2, 3]
       @encrypter = key_array.reduce({}) do |encrypter, num|
         encrypter[num] = Hash[create_letters.zip(create_letters.rotate(combine_arrays[num]))]
@@ -30,11 +28,11 @@ class Encrypt
       end
   end
 
-  def encrypt_message
+  def encrypt_message(message, key = nil, date = nil)
     shift_hash
     num = -1
 
-    @message.map do |letter|
+    message.downcase.chars.map do |letter|
       num += 1
       if create_letters.include?(letter) && num <= 3
         @encrypter[num][letter]
