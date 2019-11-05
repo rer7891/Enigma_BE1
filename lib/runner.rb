@@ -5,7 +5,7 @@ require './lib/offset'
 
 key = Keys.new
 offset = Offset.new
-encryts = Encrypt.new(key, offset)
+encrypts = Encrypt.new(key, offset)
 enigma = Enigma.new(encrypts)
 
-puts enigma.encrypt("Im over it!")
+puts enigma.encrypt("Im over it!", [01, 23, 54, 76])

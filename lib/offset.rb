@@ -1,11 +1,12 @@
 class Offset
   attr_reader :date
-  def initialize (date)
-    @date = date.to_i
+
+  def create_a_date
+    Time.now.strftime("%d%m%y")
   end
 
   def multiply_date
-     @date * @date
+    create_a_date.to_i * create_a_date.to_i
   end
 
   def make_offset
