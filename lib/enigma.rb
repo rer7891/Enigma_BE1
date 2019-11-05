@@ -3,18 +3,18 @@ require './lib/offset'
 require './lib/encrypt'
 
 class Enigma
-  def initialize
-    @keys = Keys.new
-    @date = Time.now.strftime("%d%m%y")
-    @offset = Offset.new(@date)
+  attr_reader :encrypts
+
+  def initialize(encrypts)
+    @encrypts = encrypts
   end
 
-  def encrypt(message, key = @keys.key_array_generator, date = @date)
+  def encrypt(message, key = nil, date = nil)
+    key = @encrypts.keys.key_array_generator if key.nil?
+    date = @encrypts.offset.create_a_date if date.nil?
 
-    encrypts = Encrypt.new(message, key, date)
-
-    {encryption: encrypts.encrypt_message,
-    key: encrypts.shift_generator,
+    {encryption: @encrypts.encrypt_message(message, key, date),
+    key: @encrypts.shift_generator,
     date: date}
   end
 

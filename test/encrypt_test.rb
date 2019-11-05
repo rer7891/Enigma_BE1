@@ -17,7 +17,7 @@ class EncryptTest < MiniTest::Test
   end
 
   def test_it_initializes
-    assert_equal Keys, @encrypt.key.class
+    assert_equal Keys, @encrypt.keys.class
     assert_equal Offset, @encrypt.offset.class
   end
 

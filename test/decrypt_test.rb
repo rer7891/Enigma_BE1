@@ -3,13 +3,13 @@ require './lib/decrypt'
 require './lib/keys'
 require './lib/offset'
 
-class EncryptTest < MiniTest::Test
+class DecryptTest < MiniTest::Test
 
   def setup
-    @key = [1, 12, 23, 31]
-    @offset = [2, 1, 6, 1]
+    @decrypt_key = [1, 12, 23, 31]
+    @decrypt_offset = [2, 1, 6, 1]
     @message = "lz uyru lg!"
-    @decrypt = Decrypt.new(@key, @offset)
+    @decrypt = Decrypt.new(@decrypt_key, @decrypt_offset)
   end
 
   def test_it_exists
@@ -17,8 +17,8 @@ class EncryptTest < MiniTest::Test
   end
 
   def test_it_initializes
-    assert_equal [1, 12, 23, 31], @decrypt.key
-    assert_equal [2, 1, 6, 1], @decrypt.offset
+    assert_equal [1, 12, 23, 31], @decrypt.decrypt_key
+    assert_equal [2, 1, 6, 1], @decrypt.decrypt_offset
   end
 
   def test_it_creates_an_alphabet
@@ -37,7 +37,8 @@ class EncryptTest < MiniTest::Test
   end
 
   def test_it_can_decrypt_a_message
-    assert_equal "im over it!", @decrypt.decrypt_message(@message)
+    decrypt = Decrypt.new(@decrypt_key, @decrypt_offset)
+    assert_equal "im over it!", decrypt.decrypt_message(@message)
   end
 
   def test_encryption_keys

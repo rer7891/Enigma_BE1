@@ -25,6 +25,6 @@ end
 
   def test_it_can_make_an_offset
     @offset.expects(:create_a_date).at_least_once.returns("011119")
-    assert_equal [2, 1, 6, 1], @offset.make_offset(@offset.multiply_date)
+    assert_equal [2, 1, 6, 1], @offset.make_offset
   end
 end

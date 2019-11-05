@@ -1,9 +1,9 @@
 class Decrypt
-  attr_reader :key, :offset, :encrypter
+  attr_reader :decrypt_key, :decrypt_offset, :encrypter
 
-  def initialize(key, offset)
-    @key = key
-    @offset = offset
+  def initialize(decrypt_key, decrypt_offset)
+    @decrypt_key = decrypt_key
+    @decrypt_offset = decrypt_offset
   end
 
   def create_letters
@@ -11,7 +11,7 @@ class Decrypt
   end
 
   def combine_arrays
-    combined_array = @key.zip(@offset)
+    combined_array = @decrypt_key.zip(@decrypt_offset)
     combined_array.map {|num| num.sum }.flatten
   end
 
@@ -35,7 +35,6 @@ class Decrypt
     message.downcase.chars.map do |letter|
       num += 1
       if create_letters.include?(letter) && num <= 3
-#require "pry"; binding.pry
         @encrypter[num].key(letter)
       elsif create_letters.include?(letter) && num > 3
         num = 0
