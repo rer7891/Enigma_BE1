@@ -2,7 +2,7 @@ require_relative 'shift_module'
 
 class Encrypter
 
-include ShiftModule
+  include ShiftModule
   attr_reader :keys, :offset, :encrypter
 
   def initialize(keys, offset)

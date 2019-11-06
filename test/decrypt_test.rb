@@ -27,8 +27,8 @@ class DecrypterTest < MiniTest::Test
     assert_equal expected, @decrypt.create_letters
   end
 
-  def test_it_can_combine_arrays
-    assert_equal [3, 13, 29, 32], @decrypt.combine_arrays([1, 12, 23, 31],"011119")
+  def test_it_make_shift_arrays
+    assert_equal [3, 13, 29, 32], @decrypt.shift_array([1, 12, 23, 31],"011119")
   end
 
   def test_it_can_assign_keys

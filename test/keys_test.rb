@@ -19,6 +19,7 @@ class KeysTest < Minitest::Test
   def test_it_can_split_up_random_number_into_an_array
     @keys.expects(:rand_num_generator).returns('01231')
     assert_equal [1, 12, 23, 31], @keys.key_array_generator
+    assert_equal [1, 12, 23, 31], @keys.key_array_generator('01231')
   end
 
 end
