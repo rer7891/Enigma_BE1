@@ -9,5 +9,11 @@ offset = Offset.new
 encrypts = Encrypter.new(key, offset)
 decrypts = Decrypter.new(key, offset)
 enigma = Enigma.new(encrypts, decrypts)
-puts enigma.encrypt("Im over it!", '34264')
-puts enigma.decrypt("sd bfvx sk!", '34264')
+puts
+puts enigma.encrypt("Hello world!", '34326','011119')
+puts enigma.decrypt('rwxmy ipbdp!','34326','011119')
+puts
+puts encrypted = enigma.encrypt("hello world", "02715")
+puts enigma.decrypt(encrypted[:encryption], "02715")
+puts
+puts enigma.encrypt("hello world")
