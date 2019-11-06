@@ -1,19 +1,19 @@
 require './test/test_helper'
-require './lib/decrypt'
+require './lib/decrypter'
 require './lib/keys'
 require './lib/offset'
 
-class DecryptTest < MiniTest::Test
+class DecrypterTest < MiniTest::Test
 
   def setup
     @key = Keys.new
     @offset = Offset.new
     @message = "lz uyru lg!"
-    @decrypt = Decrypt.new(@key, @offset)
+    @decrypt = Decrypter.new(@key, @offset)
   end
 
   def test_it_exists
-    assert_instance_of Decrypt, @decrypt
+    assert_instance_of Decrypter, @decrypt
   end
 
   def test_it_initializes
@@ -37,7 +37,7 @@ class DecryptTest < MiniTest::Test
   end
 
   def test_it_can_decrypt_a_message
-    decrypt = Decrypt.new(@key, @offset)
+    decrypt = Decrypter.new(@key, @offset)
     assert_equal "im over it!", decrypt.decrypt_message(@message,[1, 12, 23, 31], "011119")
   end
 

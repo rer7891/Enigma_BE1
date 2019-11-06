@@ -1,7 +1,7 @@
 require './lib/keys'
 require './lib/offset'
-require './lib/encrypt'
-require './lib/decrypt'
+require './lib/encrypter'
+require './lib/decrypter'
 
 class Enigma
   attr_reader :encrypts, :decrypts

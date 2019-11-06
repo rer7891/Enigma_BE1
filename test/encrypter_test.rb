@@ -1,19 +1,19 @@
 require './test/test_helper'
-require './lib/encrypt'
+require './lib/encrypter'
 require './lib/keys'
 require './lib/offset'
 
-class EncryptTest < MiniTest::Test
+class EncrypterTest < MiniTest::Test
 
   def setup
     @key = Keys.new
     @offset = Offset.new
     @message = "Im over it!"
-    @encrypt = Encrypt.new(@key, @offset)
+    @encrypt = Encrypter.new(@key, @offset)
   end
 
   def test_it_exists
-    assert_instance_of Encrypt, @encrypt
+    assert_instance_of Encrypter, @encrypt
   end
 
   def test_it_initializes
