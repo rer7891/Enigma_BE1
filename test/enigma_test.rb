@@ -2,15 +2,16 @@ require './test/test_helper'
 require './lib/enigma'
 require './lib/keys'
 require './lib/offset'
-require './lib/encrypt'
+require './lib/encrypter'
+require './lib/decrypter'
 
 class EnigmaTest < Minitest::Test
 
   def setup
     @keys = Keys.new
     @offset = Offset.new
-    @encrypts = Encrypt.new(@keys, @offset)
-    @decrypts = Decrypt.new(@keys, @offset)
+    @encrypts = Encrypter.new(@keys, @offset)
+    @decrypts = Decrypter.new(@keys, @offset)
     @enigma = Enigma.new(@encrypts, @decrypts)
   end
 
@@ -19,16 +20,18 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_initializes
-    assert_equal Encrypt, @enigma.encrypts.class
+    assert_equal Encrypter, @enigma.encrypts.class
+    assert_equal Decrypter, @enigma.decrypts.class
   end
 
   def test_it_can_encrypt
-    expected = {:encryption => "lz uyru lg!", :key => [1, 12, 23, 31], :date => "011119"}
+    @encrypts.keys.expects(:rand_num_generator).returns('01231')
+    expected = {:encryption => "lz uyru lg!", :key=>'01231', :date => "011119"}
     assert_equal expected, @enigma.encrypt("Im over it!",'01231',"011119")
   end
 
   def test_it_can_decrypt
-    expected = {:decryption => "im over it!", :key => [1, 12, 23, 31], :date => "011119"}
+    expected = {:decryption => "im over it!", :key=>"01231", :date => "011119"}
     assert_equal expected, @enigma.decrypt("lz uyru lg!",'01231', "011119")
   end
 end
