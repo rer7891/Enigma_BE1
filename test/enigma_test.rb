@@ -25,7 +25,6 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_encrypt
-    @encrypts.keys.expects(:rand_num_generator).returns('01231')
     expected = {:encryption => "lz uyru lg!", :key=>'01231', :date => "011119"}
     assert_equal expected, @enigma.encrypt("Im over it!",'01231',"011119")
   end
