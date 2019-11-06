@@ -6,10 +6,10 @@ require './lib/offset'
 class DecryptTest < MiniTest::Test
 
   def setup
-    @decrypt_key = [1, 12, 23, 31]
-    @decrypt_offset = [2, 1, 6, 1]
+    @key = Keys.new
+    @offset = Offset.new
     @message = "lz uyru lg!"
-    @decrypt = Decrypt.new(@decrypt_key, @decrypt_offset)
+    @decrypt = Decrypt.new(@key, @offset)
   end
 
   def test_it_exists
@@ -17,8 +17,8 @@ class DecryptTest < MiniTest::Test
   end
 
   def test_it_initializes
-    assert_equal [1, 12, 23, 31], @decrypt.decrypt_key
-    assert_equal [2, 1, 6, 1], @decrypt.decrypt_offset
+    assert_equal Keys, @decrypt.keys.class
+    assert_equal Offset, @decrypt.offset.class
   end
 
   def test_it_creates_an_alphabet
@@ -28,24 +28,24 @@ class DecryptTest < MiniTest::Test
   end
 
   def test_it_can_combine_arrays
-    assert_equal [3, 13, 29, 32], @decrypt.combine_arrays
+    assert_equal [3, 13, 29, 32], @decrypt.combine_arrays([1, 12, 23, 31],"011119")
   end
 
   def test_it_can_assign_keys
     expected = {"A"=>3, "B"=>13, "C"=>29, "D"=>32}
-    assert_equal expected, @decrypt.shift_generator
+    assert_equal expected, @decrypt.shift_generator([1, 12, 23, 31], "011119")
   end
 
   def test_it_can_decrypt_a_message
-    decrypt = Decrypt.new(@decrypt_key, @decrypt_offset)
-    assert_equal "im over it!", decrypt.decrypt_message(@message)
+    decrypt = Decrypt.new(@key, @offset)
+    assert_equal "im over it!", decrypt.decrypt_message(@message,[1, 12, 23, 31], "011119")
   end
 
   def test_encryption_keys
     expected = {"a"=>"g", "b"=>"h", "c"=>"i", "d"=>"j", "e"=>"k", "f"=>"l", "g"=>"m", "h"=>"n", "i"=>"o", "j"=>"p", "k"=>"q",
     "l"=>"r", "m"=>"s", "n"=>"t", "o"=>"u", "p"=>"v", "q"=>"w", "r"=>"x", "s"=>"y", "t"=>"z", "u"=>"a",
     "v"=>"b", "w"=>"c", "x"=>"d", "y"=>"e", "z"=>"f"}
-    assert_equal Hash, @decrypt.shift_hash.class
+    assert_equal Hash, @decrypt.shift_hash([1, 12, 23, 31], "011119").class
     assert_equal [0, 1, 2, 3], @decrypt.encrypter.keys
     assert_equal expected, @decrypt.encrypter[3]
   end

@@ -8,8 +8,9 @@ class Keys
     if key == nil
       num_join = rand_num_generator.chars.each_cons(2).map {|num| num.join}
       num_join.map {|num| num.to_i}
-    else key != nil
-      key
+    elsif key != nil
+      num_join = key.chars.each_cons(2).map {|num| num.join}
+      num_join.map {|num| num.to_i}
     end
   end
 end
